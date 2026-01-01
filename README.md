@@ -1,17 +1,17 @@
-# roomM8
+# spaceM8
 
-roomM8 is a full‑stack web application that helps roommates manage shared living tasks such as room setup, chores, announcements, grocery lists, and shared expenses in one place.[file:1]
+spaceM8 is a full‑stack web application that helps roommates manage shared living tasks such as space setup, chores, announcements, grocery lists, and shared expenses in one place.[file:1]
 
 ## Features
 
 - Secure authentication (register, login, JWT, forgot/reset password).[file:1]
-- Create and join rooms via unique room codes.[file:1]
-- Manage room members and their profiles.[file:1]
+- Create and join spaces via unique space codes.[file:1]
+- Manage space members and their profiles.[file:1]
 - Create, assign, update, finish, and delete tasks for roommates.[file:1]
-- Post and manage room‑wide announcements.[file:1]
+- Post and manage space‑wide announcements.[file:1]
 - Shared grocery lists with items, quantities, and purchased status.[file:1]
 - Track shared expenses, split amounts between participants, and record settle‑ups.[file:1]
-- View recent expense and settle‑up activities per room.[file:1]
+- View recent expense and settle‑up activities per space.[file:1]
 
 ## Tech Stack
 
@@ -49,15 +49,15 @@ roomM8 is a full‑stack web application that helps roommates manage shared livi
 
 ## Architecture
 
-roomM8 follows a client–server architecture:
+spaceM8 follows a client–server architecture:
 
 - **Frontend (Next.js)** renders the UI and calls backend APIs using the JWT stored in local storage.[file:1]
-- **Backend (Spring Boot)** exposes REST endpoints for authentication, rooms, tasks, announcements, groceries, expenses, settle‑ups, activities, and profiles.[file:1]
-- **Database (MySQL)** stores users, rooms, tasks, expenses, grocery lists, activity logs, etc.[file:1]
+- **Backend (Spring Boot)** exposes REST endpoints for authentication, spaces, tasks, announcements, groceries, expenses, settle‑ups, activities, and profiles.[file:1]
+- **Database (MySQL)** stores users, spaces, tasks, expenses, grocery lists, activity logs, etc.[file:1]
 
 Core entities include:
 
-- `User`, `Room`, `UserRoom`
+- `User`, `Space`, `UserSpace`
 - `Task`, `Announcement`
 - `Expense`, `Participant`, `SettleUp`, `Activity`
 - `Grocery`, `GroceryItems`
@@ -66,14 +66,14 @@ Core entities include:
 ## How It Works
 
 1. A user registers or logs in with email and password.
-2. The backend validates credentials and returns a JWT that encodes user and room details.
+2. The backend validates credentials and returns a JWT that encodes user and space details.[file:1]
 3. The frontend stores the JWT (e.g., local storage) and attaches it to each API request.
 4. The backend validates the token, executes business logic, and persists data in MySQL.[file:1]
 
 Example user flows:
 
-- **Room setup:** Create a room, share the code, roommates join using the code, and members list is updated.[file:1]
-- **Tasks:** Create a task for a room, assign it to a roommate, mark it as finished when done.[file:1]
+- **Space setup:** Create a space, share the code, roommates join using the code, and members list is updated.[file:1]
+- **Tasks:** Create a task for a space, assign it to a roommate, mark it as finished when done.[file:1]
 - **Expenses:** Add an expense, select participants, the backend automatically splits the amount and creates participant records and activities.[file:1]
 - **Settle‑up:** Use the calculations endpoint to see who owes whom, then record settle‑up payments.[file:1]
 
@@ -83,12 +83,12 @@ Some representative endpoints:
 
 - `POST /api/v1/auth/register` – register a new user
 - `POST /api/v1/auth/login` – login and receive JWT
-- `POST /api/v1/room/create` – create a new room
-- `POST /api/v1/room/join` – join room by code
-- `GET /task/get-all` – list all tasks for current room
+- `POST /api/v1/space/create` – create a new space
+- `POST /api/v1/space/join` – join space by code
+- `GET /task/get-all` – list all tasks for current space
 - `POST /api/v1/expense/add` – add an expense with participants
 - `GET /api/v1/settleup/calculations` – get who‑owes‑whom calculations
-- `GET /api/v1/activity/all` – view activity history for room[file:1]
+- `GET /api/v1/activity/all` – view activity history for space[file:1]
 
 (See API docs section of the technical design document or backend code for the complete list.)[file:1]
 
